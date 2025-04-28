@@ -74,3 +74,28 @@ Ve a tu repositorio en GitHub.
 Haz clic en Settings > Pages.
 Selecciona la rama main y guarda los cambios.
 GitHub generará una URL para tu página.
+
+
+
+GitHub Copilot
+No, los cambios que hagas directamente en GitHub no se reflejan automáticamente en Visual Studio Code. Para sincronizar los cambios realizados en GitHub con tu proyecto local en Visual Studio Code, debes descargar (pull) esos cambios usando Git.
+
+Pasos para sincronizar los cambios de GitHub con Visual Studio Code
+Abre tu terminal en Visual Studio Code:
+
+Ve al menú Ver > Terminal o presiona Ctrl +  (tecla de tilde invertida).
+Navega al directorio de tu proyecto: Asegúrate de estar en la carpeta de tu proyecto. Si no estás, usa el comando:
+cd c:\Users\ssdaquintero\IASERVICIOSVIP\mi-pagina-web
+
+Descarga los cambios del repositorio remoto: Ejecuta el siguiente comando para traer los cambios de GitHub a tu máquina local:
+
+git pull origin main
+
+origin: Es el nombre del repositorio remoto.
+main: Es la rama principal del proyecto.
+Resolver conflictos (si los hay): Si hay conflictos entre los cambios locales y los cambios en GitHub, Git te pedirá que los resuelvas manualmente. Abre los archivos en conflicto, resuelve las diferencias y luego guarda los cambios.
+
+Verifica los cambios en Visual Studio Code: Una vez que el comando git pull se complete, los cambios realizados en GitHub aparecerán en tu proyecto local en Visual Studio Code.
+
+Notas importantes
+Si tienes cambios locales no confirmados, Git te pedirá que los confirmes (commit) o los guardes temporalmente (stash) antes de hacer el pull.
