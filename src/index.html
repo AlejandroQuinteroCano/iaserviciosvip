@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios y Soporte Técnico</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Servicios VIP</h1>
+        <nav>
+            <a href="#secciones">Inicio</a>
+            <a href="#contacto">Contacto</a>
+            <a href="#soporte">Soporte</a>
+            <a href="#servicios">servicios</a>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="login.html">Iniciar Sesión</a>
+                <a href="admin.html">Panel de Administración</a>
+            </nav>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="secciones">
+            <h2>Nuestras Secciones</h2>
+            <div class="secciones-grid">
+                <div class="seccion">
+                    <h3>Compras</h3>
+                    <p>Explora nuestros productos y servicios.</p>
+                    <a href="compras.html" class="btn">Ir a Compras</a>
+                </div>
+                <div class="seccion">
+                    <h3>Soporte Eléctrico</h3>
+                    <p>Soluciones para tus problemas eléctricos.</p>
+                    <a href="electrico.html" class="btn">Ir a Soporte Eléctrico</a>
+                </div>
+                <div class="seccion">
+                    <h3>RETIE</h3>
+                    <p>Certificaciones y cumplimiento normativo.</p>
+                    <a href="retie.html" class="btn">Ir a RETIE</a>
+                </div>
+                <div class="seccion">
+                    <h3>Soporte de Computadores</h3>
+                    <p>Reparación y mantenimiento de equipos.</p>
+                    <a href="soporte.html" class="btn">Ir a Soporte de Computadores</a>
+                </div>
+                <div class="seccion">
+                    <h3>Hágalo con IA</h3>
+                    <p>Automatización y soluciones inteligentes.</p>
+                    <a href="casaia.html" class="btn">Ir a Hágalo con IA</a>
+                </div>
+                <div class="seccion">
+                    <h3>Mantenimiento</h3>
+                    <p>Servicios de mantenimiento preventivo y correctivo.</p>
+                    <a href="mantenimiento.html" class="btn">Ir a Mantenimiento</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Servicios VIP. Todos los derechos reservados.</p>
+    </footer>
+
+    <div id="chatbot" class="chatbot hidden">
+        <div class="chatbot-header">
+            <h3>Chatbot</h3>
+            <button id="close-chatbot">X</button>
+        </div>
+        <div class="chatbot-body">
+            <p>Hola, ¿en qué puedo ayudarte?</p>
+        </div>
+        <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+    </div>
+    <footer>
+        <p>&copy; 2025 Servicios VIP. Todos los derechos reservados.</p>
+    </footer>
+    
+    <!-- Contenedor adicional -->
+    <div class="contact-container">
+        <div class="contact-form">
+            <h3>Contáctanos</h3>
+            <form action="mailto:soporte@serviciosvip.com" method="post" enctype="text/plain">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="Tu correo" required>
+                
+                <label for="message">Mensaje:</label>
+                <textarea id="message" name="message" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    
+        <div class="contact-info">
+            <h3>Datos de Contacto</h3>
+            <p><strong>Teléfono:</strong> +57 123 456 7890</p>
+            <p><strong>Correo:</strong> soporte@serviciosvip.com</p>
+            <p><strong>Dirección:</strong> Calle 123, Ciudad, País</p>
+            
+            <div class="social-buttons">
+                <a href="https://wa.me/1234567890" target="_blank" class="whatsapp">WhatsApp</a>
+                <a href="https://facebook.com" target="_blank" class="facebook">Facebook</a>
+                <a href="https://twitter.com" target="_blank" class="twitter">Twitter</a>
+                <a href="https://instagram.com" target="_blank" class="instagram">Instagram</a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="chatbot" class="chatbot hidden">
+        <div class="chatbot-header">
+            <h3>Chatbot</h3>
+            <button id="close-chatbot">X</button>
+        </div>
+        <div class="chatbot-body">
+            <p>Hola, ¿en qué puedo ayudarte?</p>
+        </div>
+        <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+    </div>
+    <!--
+    Descripción de las carpetas
+styles/: Contiene los archivos CSS para los estilos de la página.
+scripts/: Contiene los archivos JavaScript para la lógica de la página.
+assets/: Contiene todos los recursos multimedia y documentos:
+images/: Imágenes del proyecto, organizadas por tipo o sección (por ejemplo, productos, banners, etc.).
+videos/: Videos promocionales, tutoriales o cualquier otro contenido en video.
+audios/: Archivos de audio como música de fondo, mensajes de bienvenida o instrucciones.
+docs/: Documentos como manuales, términos y condiciones, o cualquier archivo descargable.
+    
+    -->
+<!-- imagenes -->
+    <img src="assets/images/logo.png" alt="Logo">
+<img src="assets/images/productos/producto1.jpg" alt="Producto 1">
+
+<!--videos-->
+<video controls>
+    <source src="assets/videos/promocion.mp4" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+</video>
+<!-- audios -->
+<audio controls>
+    <source src="assets/audios/bienvenida.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+</audio>
+<!--  documentos-->
+
+<a href="assets/docs/manual.pdf" target="_blank">Descargar Manual</a>
+<!--Consejos para mantener la estructura
+Nombres descriptivos: Usa nombres claros y descriptivos para los archivos (por ejemplo, banner.jpg en lugar de img1.jpg).
+Organización por categorías: Si tienes muchos archivos, organiza las subcarpetas por categorías (por ejemplo, productos, banners, etc.).
+Evita espacios en los nombres: Usa guiones (-) o guiones bajos (_) en lugar de espacios (por ejemplo, manual_usuario.pdf).
+-->
+<!---->
+
+
+
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
+<!--cuando instale node tenwer encuneta es te datos 
+
+
+GitHub Copilot
+¡Perfecto! Vamos a preparar un plan para integrar el backend con Node.js y una base de datos como MongoDB. Este backend permitirá manejar las compras en línea, almacenar productos y procesar pedidos.
+
+Plan para el Backend
+1. Configuración del entorno
+Instalar Node.js: Una vez que tengas permisos, instala Node.js desde nodejs.org.
+Inicializar el proyecto:
+Instalar dependencias necesarias:
+2. Crear la estructura del proyecto
+Organiza tu proyecto de esta manera:
+
+3. Crear el modelo de productos
+Crea un archivo producto.js en la carpeta models para definir el esquema de los productos.
+
+server/models/producto.js
+4. Crear las rutas para productos
+Crea un archivo productos.js en la carpeta routes para manejar las solicitudes relacionadas con los productos.
+
+server/routes/productos.js
+5. Configurar el servidor
+Crea el archivo server.js en la carpeta server para configurar el servidor.
+
+server/server.js
+6. Conectar el frontend con el backend
+Actualiza el archivo compras.js para obtener los productos desde el backend en lugar del archivo JSON.
+
+compras.js
+7. Prueba el backend
+Asegúrate de que MongoDB esté corriendo en tu máquina.
+Inicia el servidor:
+Abre compras.html en tu navegador y verifica que los productos se carguen desde el backend.
+Próximos pasos
+Agregar un carrito de compras: Permitir a los usuarios agregar productos al carrito y procesar pedidos.
+Integrar un sistema de pagos: Usar una API como PayPal o Stripe para procesar pagos.
+Autenticación de usuarios: Implementar un sistema de inicio de sesión para los clientes.
+¿Te gustaría que avancemos con alguno de estos pasos?
+
+7. Prueba el backend
+Asegúrate de que MongoDB esté corriendo en tu máquina.
+Inicia el servidor:
+Abre compras.html en tu navegador y verifica que los productos se carguen desde el backend.
+Próximos pasos
+Agregar un carrito de compras: Permitir a los usuarios agregar productos al carrito y procesar pedidos.
+Integrar un sistema de pagos: Usar una API como PayPal o Stripe para procesar pagos.
+Autenticación de usuarios: Implementar un sistema de inicio de sesión para los clientes.
+-->
+
