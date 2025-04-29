@@ -1,0 +1,101 @@
+conexión terminal nuevo proyecto GitHub
+
+abre un terminal
+
+1. Crear un repositorio en GitHub
+Ve a GitHub e inicia sesión con tu cuenta.
+Haz clic en el botón "New" para crear un nuevo repositorio.
+Llena los campos:
+Repository name: Escribe un nombre para tu repositorio (por ejemplo, mi-pagina-web).
+Visibility: Selecciona Public (para que sea accesible desde GitHub Pages).
+Haz clic en Create repository.
+2. Subir tu proyecto al repositorio
+Abre tu terminal o usa la terminal integrada de VS Code.
+Navega a la carpeta de tu proyecto:
+
+cd c:\Users\ssdaquintero\IASERVICIOSVIP\mi-pagina-web
+
+Inicializa un repositorio Git en tu proyecto:
+git init
+
+Agrega todos los archivos al repositorio:
+
+git add .
+Crea un commit con un mensaje:
+
+git commit -m "Primera versión de mi página web"
+
+
+
+Conecta tu repositorio local con el repositorio remoto en GitHub:
+(Reemplaza tu-usuario con tu nombre de usuario de GitHub y mi-pagina-web con el nombre de tu repositorio).
+
+git remote add origin https://github.com/tu-usuario/mi-pagina-web.git
+Sube los archivos al repositorio remoto:
+git push -u origin main
+
+
+git remote set-url origin https://github.com/AlejandroQuinteroCano/iaserviciosvip.git
+git add .
+git commit -m "Primera versión de mi página web"
+git branch -M main
+git push -u origin main
+
+
+
+Explicación del mensaje
+branch 'main' set up to track 'origin/main'.
+
+Esto indica que la rama local main ahora está vinculada (o "trackeando") la rama remota origin/main en GitHub. Esto significa que cualquier cambio que hagas en la rama main local se puede sincronizar fácilmente con la rama main del repositorio remoto.
+Everything up-to-date
+
+Esto significa que no hay cambios nuevos en tu repositorio local que necesiten ser subidos al repositorio remoto. Todo está sincronizado entre tu máquina local y GitHub.
+
+
+
+Actualizar  GitHub 
+
+git add .
+git commit -m "Descripción de los cambios"
+git push
+
+
+¿Qué hacer ahora?
+Si ya configuraste GitHub Pages en tu repositorio, puedes visitar la URL de tu página (por ejemplo, https://AlejandroQuinteroCano.github.io/iaserviciosvip/) para verificar que todo esté funcionando correctamente.
+
+Si necesitas realizar cambios en tu proyecto:
+
+Modifica los archivos en tu proyecto local.
+Usa los comandos:
+Esto subirá los cambios al repositorio remoto.
+Si aún no configuraste GitHub Pages, sigue estos pasos:
+
+Ve a tu repositorio en GitHub.
+Haz clic en Settings > Pages.
+Selecciona la rama main y guarda los cambios.
+GitHub generará una URL para tu página.
+
+
+
+GitHub Copilot
+No, los cambios que hagas directamente en GitHub no se reflejan automáticamente en Visual Studio Code. Para sincronizar los cambios realizados en GitHub con tu proyecto local en Visual Studio Code, debes descargar (pull) esos cambios usando Git.
+
+Pasos para sincronizar los cambios de GitHub con Visual Studio Code
+Abre tu terminal en Visual Studio Code:
+
+Ve al menú Ver > Terminal o presiona Ctrl +  (tecla de tilde invertida).
+Navega al directorio de tu proyecto: Asegúrate de estar en la carpeta de tu proyecto. Si no estás, usa el comando:
+cd c:\Users\ssdaquintero\IASERVICIOSVIP\mi-pagina-web
+
+Descarga los cambios del repositorio remoto: Ejecuta el siguiente comando para traer los cambios de GitHub a tu máquina local:
+
+git pull origin main
+
+origin: Es el nombre del repositorio remoto.
+main: Es la rama principal del proyecto.
+Resolver conflictos (si los hay): Si hay conflictos entre los cambios locales y los cambios en GitHub, Git te pedirá que los resuelvas manualmente. Abre los archivos en conflicto, resuelve las diferencias y luego guarda los cambios.
+
+Verifica los cambios en Visual Studio Code: Una vez que el comando git pull se complete, los cambios realizados en GitHub aparecerán en tu proyecto local en Visual Studio Code.
+
+Notas importantes
+Si tienes cambios locales no confirmados, Git te pedirá que los confirmes (commit) o los guardes temporalmente (stash) antes de hacer el pull.
