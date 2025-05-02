@@ -1,36 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chatbot = document.getElementById('chatbot');
-    const chatbotBtn = document.getElementById('chatbot-btn');
     const closeChatbot = document.getElementById('close-chatbot');
     const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
     const chatbotBody = document.querySelector('.chatbot-body');
 
-    // Mostrar el chatbot al hacer clic en el botón
-    chatbotBtn.addEventListener('click', () => {
-        chatbot.classList.remove('hidden');
-    });
+    // Mostrar el chatbot (puedes agregar un botón para abrirlo si es necesario)
+    chatbot.classList.remove('hidden');
 
     // Ocultar el chatbot al hacer clic en el botón de cerrar
     closeChatbot.addEventListener('click', () => {
         chatbot.classList.add('hidden');
     });
 
-    // Enviar mensajes al chatbot
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const message = chatInput.value;
-            chatbotBody.innerHTML += `<p><strong>Tú:</strong> ${message}</p>`;
+    // Function to add a message to the chatbox
+    function addMessage(message, isUser = false) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        messageElement.style.textAlign = isUser ? 'right' : 'left';
+        chatbotBody.appendChild(messageElement);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    // Enviar mensajes al chatbot al hacer clic en el botón de enviar
+    chatSend.addEventListener('click', () => {
+        const userMessage = chatInput.value.trim();
+        if (userMessage) {
+            addMessage(userMessage, true);
             chatInput.value = '';
 
-            // Respuesta predefinida del chatbot
-            let reply = 'Lo siento, no entiendo tu mensaje.';
-            if (message.toLowerCase().includes('servicio')) {
-                reply = 'Ofrecemos soporte técnico y servicios personalizados. ¿En qué puedo ayudarte?';
-            } else if (message.toLowerCase().includes('precio')) {
-                reply = 'Nuestros precios varían según el servicio. Contáctanos para más información.';
-            }
-
-            chatbotBody.innerHTML += `<p><strong>Chatbot:</strong> ${reply}</p>`;
+            // Simular respuesta del bot
+            setTimeout(() => {
+                const botResponse = getBotResponse(userMessage);
+                addMessage(botResponse);
+            }, 1000);
         }
     });
+
+    // Enviar mensajes al presionar Enter
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            chatSend.click(); // Simula el clic en el botón de enviar
+        }
+    });
+
+    // Simple bot response logic
+    function getBotResponse(message) {
+        message = message.toLowerCase();
+
+        if (message.includes('soporte')) {
+            return '¿Necesitas soporte técnico para computadores o redes eléctricas?';
+        } else if (message.includes('computadores')) {
+            return 'Ofrecemos servicios como mantenimiento de hardware, instalación de software y reparación de equipos. ¿Qué necesitas específicamente?';
+        } else if (message.includes('redes eléctricas')) {
+            return 'Podemos ayudarte con instalaciones, reparaciones y mantenimiento de redes eléctricas domiciliarias. ¿En qué podemos asistirte?';
+        } else if (message.includes('mantenimiento')) {
+            return 'Realizamos mantenimiento preventivo y correctivo. ¿Es para hardware, software o redes eléctricas?';
+        } else if (message.includes('contacto')) {
+            return 'Puedes contactarnos al correo iaserviciosvip@hotmail.com o al WhatsApp 3117773087.';
+        } else {
+            return 'Lo siento, no entendí tu mensaje. Por favor, intenta ser más específico.';
+        }
+    }
 });
