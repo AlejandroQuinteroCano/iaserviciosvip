@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatSend = document.getElementById('chat-send');
     const chatbotBody = document.querySelector('.chatbot-body');
 
-    // Mostrar el chatbot (puedes agregar un botón para abrirlo si es necesario)
+    // Web Speech API: Synthesis
+    const synth = window.speechSynthesis;
+
+    // Mostrar el chatbot
     chatbot.classList.remove('hidden');
 
     // Ocultar el chatbot al hacer clic en el botón de cerrar
@@ -20,19 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
         messageElement.style.textAlign = isUser ? 'right' : 'left';
         chatbotBody.appendChild(messageElement);
         chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+        // Si es un mensaje del bot, hablarlo
+        if (!isUser) {
+            const utterance = new SpeechSynthesisUtterance(message);
+utterance.lang = 'es-ES'; // Idioma español
+utterance.pitch = 1; // Tono de voz (1 es normal)
+utterance.rate = 1; // Velocidad de habla (1 es normal)
+synth.speak(utterance);
+        }
     }
 
     // Enviar mensajes al chatbot al hacer clic en el botón de enviar
     chatSend.addEventListener('click', () => {
         const userMessage = chatInput.value.trim();
         if (userMessage) {
-            addMessage(userMessage, true);
-            chatInput.value = '';
+            addMessage(userMessage, true); // Agregar mensaje del usuario
+            console.log('Mensaje enviado:', userMessage); // Depuración del mensaje enviado
+            chatInput.value = ''; // Limpiar el input
 
             // Simular respuesta del bot
             setTimeout(() => {
                 const botResponse = getBotResponse(userMessage);
-                addMessage(botResponse);
+                addMessage(botResponse); // Agregar respuesta del bot
+                console.log('Respuesta del bot:', botResponse); // Depuración de la respuesta del bot
             }, 1000);
         }
     });
