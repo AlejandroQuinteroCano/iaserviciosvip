@@ -485,6 +485,43 @@ footer {
 #close-chatbot:hover {
     color: #ff4d4d;
 }
+
+.appointment-form {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.appointment-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.appointment-form input,
+.appointment-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.appointment-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.appointment-form button:hover {
+    background-color: #0056b3;
+}
 /* Responsividad */
 @media (max-width: 768px) {
     header {
@@ -506,9 +543,90 @@ footer {
         right: 5%;
     }
 
+
     #chatbot {
         width: 90%;
         bottom: 10px;
         right: 5%;
+    }
+}
+.schedule-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.schedule-button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    header {
+        text-align: center;
+        padding: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    nav a:hover {
+        background-color: #0056b3;
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .chatbot {
+        width: 95%;
+        bottom: 15px;
+        right: 2.5%;
+        border-radius: 10px;
+    }
+
+    #chatbot {
+        width: 95%;
+        bottom: 15px;
+        right: 2.5%;
+        border-radius: 10px;
+    }
+
+    .chatbot-header {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .chatbot-body {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #chat-input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #chat-send {
+        font-size: 14px;
+        padding: 8px 10px;
     }
 }

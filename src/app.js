@@ -19,11 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to add a message to the chatbox
     function addMessage(message, isUser = false) {
         const messageElement = document.createElement('div');
-        messageElement.textContent = message;
+        
+        // Si es un mensaje del bot, permite HTML
+        if (!isUser) {
+            messageElement.innerHTML = message; // Permitir HTML en los mensajes del bot
+        } else {
+            messageElement.textContent = message; // Mostrar texto plano para mensajes del usuario
+        }
+    
         messageElement.style.textAlign = isUser ? 'right' : 'left';
         chatbotBody.appendChild(messageElement);
         chatbotBody.scrollTop = chatbotBody.scrollHeight;
-
+    }
         // Si es un mensaje del bot, hablarlo
         if (!isUser) {
             const utterance = new SpeechSynthesisUtterance(message);
@@ -32,8 +39,7 @@ utterance.pitch = 1; // Tono de voz (1 es normal)
 utterance.rate = 1; // Velocidad de habla (1 es normal)
 synth.speak(utterance);
         }
-    }
-    // Reconocimiento de voz
+      // Reconocimiento de voz
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = 'es-ES'; // Configurar idioma español
 
@@ -97,31 +103,80 @@ recognition.onerror = (event) => {
         }
     });
     
+// Función para mostrar el formulario de agendamiento
+function showAppointmentForm() {
+    const formHTML = `
+        <div class="appointment-form">
+            <p>Por favor, ingresa los detalles para agendar tu cita:</p>
+            <label for="appointment-date">Fecha:</label>
+            <input type="date" id="appointment-date" required>
+            <label for="appointment-time">Hora:</label>
+            <input type="time" id="appointment-time" required>
+            <label for="appointment-details">Detalles:</label>
+            <textarea id="appointment-details" placeholder="Describe el trabajo a realizar..." required></textarea>
+            <button id="submit-appointment">Agendar</button>
+        </div>
+    `;
+    addMessage(formHTML, false); // Mostrar el formulario en el chatbox como mensaje del bot
 
-    // Simple bot response logic
-    function getBotResponse(message) {
-        message = message.toLowerCase();
-    
-        if (message.includes('soporte')) {
-            return '¿Necesitas soporte técnico para computadores o redes eléctricas?';
-        } else if (message.includes('computadores')) {
-            return 'Ofrecemos servicios como mantenimiento de hardware, instalación de software y reparación de equipos. ¿Qué necesitas específicamente?';
-        } else if (message.includes('redes eléctricas')) {
-            return 'Podemos ayudarte con instalaciones, reparaciones y mantenimiento de redes eléctricas domiciliarias. ¿En qué podemos asistirte?';
-        } else if (message.includes('mantenimiento')) {
-            return 'Realizamos mantenimiento preventivo y correctivo. ¿Es para hardware, software o redes eléctricas?';
-        } else if (message.includes('contacto')) {
-            return 'Puedes contactarnos al correo iaserviciosvip@hotmail.com o al WhatsApp 3117773087.';
-        } else if (message.includes('precio')) {
-            return 'Nuestros precios varían según el servicio. Por favor, indícanos qué servicio necesitas para darte más información.';
-        } else if (message.includes('horario')) {
-            return 'Nuestro horario de atención es de lunes a viernes de 8:00 AM a 6:00 PM.';
-        } else if (message.includes('ubicación')) {
-            return 'Estamos ubicados en San Javier, Medellín, Colombia.';
-        } else if (message.includes('servicio a domicilio')) {
-            return 'Sí, ofrecemos servicio a domicilio para soporte técnico. ¿En qué podemos ayudarte?';
-        } else {
-            return 'Lo siento, no entendí tu mensaje. Por favor, intenta ser más específico.';
-        }
+    // Esperar a que el usuario complete el formulario
+    setTimeout(() => {
+        const submitButton = document.getElementById('submit-appointment');
+        submitButton.addEventListener('click', handleAppointmentSubmission);
+    }, 100); // Asegurarse de que el DOM esté cargado
+}
+
+// Función para manejar el envío del formulario
+function handleAppointmentSubmission() {
+    const date = document.getElementById('appointment-date').value;
+    const time = document.getElementById('appointment-time').value;
+    const details = document.getElementById('appointment-details').value;
+
+    if (date && time && details) {
+        const confirmationMessage = `
+            ¡Gracias! Tu cita ha sido agendada para el ${date} a las ${time}.
+            Detalles: ${details}.
+        `;
+        addMessage(confirmationMessage, false); // Confirmar la cita al usuario
+    } else {
+        addMessage('Por favor, completa todos los campos para agendar tu cita.', false);
     }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const scheduleButton = document.getElementById('schedule-button');
+
+    // Evento para mostrar el formulario de agendamiento al hacer clic en el botón
+    scheduleButton.addEventListener('click', () => {
+        showAppointmentForm(); // Llama a la función que muestra el formulario
+    });
+});
+// Actualizar la lógica de respuestas del bot
+function getBotResponse(message) {
+    message = message.toLowerCase();
+
+    if (message.includes('soporte')) {
+        return '¿Necesitas soporte técnico para computadores o redes eléctricas?';
+    } else if (message.includes('computadores')) {
+        return 'Ofrecemos servicios como mantenimiento de hardware, instalación de software y reparación de equipos. ¿Qué necesitas específicamente?';
+    } else if (message.includes('redes eléctricas')) {
+        return 'Podemos ayudarte con instalaciones, reparaciones y mantenimiento de redes eléctricas domiciliarias. ¿En qué podemos asistirte?';
+    } else if (message.includes('mantenimiento')) {
+        return 'Realizamos mantenimiento preventivo y correctivo. ¿Es para hardware, software o redes eléctricas?';
+    } else if (message.includes('contacto')) {
+        return 'Puedes contactarnos al correo iaserviciosvip@hotmail.com o al WhatsApp 3117773087.';
+    } else if (message.includes('precio')) {
+        return 'Nuestros precios varían según el servicio. Por favor, indícanos qué servicio necesitas para darte más información.';
+    } else if (message.includes('horario')) {
+        return 'Nuestro horario de atención es de lunes a viernes de 8:00 AM a 6:00 PM.';
+    } else if (message.includes('ubicación')) {
+        return 'Estamos ubicados en San Javier, Medellín, Colombia.';
+    } else if (message.includes('servicio a domicilio')) {
+        return 'Sí, ofrecemos servicio a domicilio para soporte técnico. ¿En qué podemos ayudarte?';
+    } else if (message.includes('agendar') || message.includes('cita')) {
+        showAppointmentForm(); // Mostrar el formulario de agendamiento
+        return 'Claro, puedo ayudarte a agendar una cita. Por favor, completa el formulario.';
+    } else {
+        return 'Lo siento, no entendí tu mensaje. Por favor, intenta ser más específico.';
+    }
+}
 });
