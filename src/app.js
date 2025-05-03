@@ -33,6 +33,45 @@ utterance.rate = 1; // Velocidad de habla (1 es normal)
 synth.speak(utterance);
         }
     }
+    // Reconocimiento de voz
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.lang = 'es-ES'; // Configurar idioma español
+
+// Botón para activar el reconocimiento de voz
+const voiceButton = document.createElement('button');
+voiceButton.textContent = '🎤 Hablar';
+voiceButton.style.marginLeft = '10px';
+voiceButton.style.padding = '10px';
+voiceButton.style.backgroundColor = '#007bff';
+voiceButton.style.color = 'white';
+voiceButton.style.border = 'none';
+voiceButton.style.borderRadius = '5px';
+voiceButton.style.cursor = 'pointer';
+document.querySelector('.chatbot-footer').appendChild(voiceButton);
+
+// Evento para iniciar el reconocimiento de voz
+voiceButton.addEventListener('click', () => {
+    console.log('Reconocimiento de voz iniciado'); // Mensaje de depuración
+    recognition.start();
+});
+
+// Capturar el texto reconocido
+recognition.onresult = (event) => {
+    const voiceMessage = event.results[0][0].transcript;
+    chatInput.value = voiceMessage; // Mostrar el texto en el input
+    const enterEvent = new KeyboardEvent('keypress', { key: 'Enter' });
+    chatInput.dispatchEvent(enterEvent); // Simular el envío del mensaje
+};
+
+// Manejar errores del reconocimiento de voz
+recognition.onerror = (event) => {
+    if (event.error === 'no-speech') {
+        console.error('No se detectó ninguna voz. Por favor, intenta hablar nuevamente.');
+        alert('No se detectó ninguna voz. Por favor, intenta hablar nuevamente.');
+    } else {
+        console.error('Error en el reconocimiento de voz:', event.error);
+    }
+};
 
     // Enviar mensajes al chatbot al hacer clic en el botón de enviar
     chatSend.addEventListener('click', () => {
@@ -57,6 +96,7 @@ synth.speak(utterance);
             chatSend.click(); // Simula el clic en el botón de enviar
         }
     });
+    
 
     // Simple bot response logic
     function getBotResponse(message) {
