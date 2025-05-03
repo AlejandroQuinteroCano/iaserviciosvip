@@ -569,6 +569,59 @@ footer {
     background-color: #0056b3;
 }
 
+.appointment-form {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.appointment-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.appointment-form input,
+.appointment-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.appointment-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.appointment-form button:hover {
+    background-color: #0056b3;
+}
+#minimize-chatbot {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#minimize-chatbot:hover {
+    color: #ffcc00;
+}
+.hidden {
+    display: none;
+}
+
 /* Responsividad */
 @media (max-width: 768px) {
     header {
