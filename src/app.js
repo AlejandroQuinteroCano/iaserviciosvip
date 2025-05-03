@@ -101,7 +101,7 @@ recognition.onerror = (event) => {
     // Simple bot response logic
     function getBotResponse(message) {
         message = message.toLowerCase();
-
+    
         if (message.includes('soporte')) {
             return '¿Necesitas soporte técnico para computadores o redes eléctricas?';
         } else if (message.includes('computadores')) {
@@ -112,6 +112,14 @@ recognition.onerror = (event) => {
             return 'Realizamos mantenimiento preventivo y correctivo. ¿Es para hardware, software o redes eléctricas?';
         } else if (message.includes('contacto')) {
             return 'Puedes contactarnos al correo iaserviciosvip@hotmail.com o al WhatsApp 3117773087.';
+        } else if (message.includes('precio')) {
+            return 'Nuestros precios varían según el servicio. Por favor, indícanos qué servicio necesitas para darte más información.';
+        } else if (message.includes('horario')) {
+            return 'Nuestro horario de atención es de lunes a viernes de 8:00 AM a 6:00 PM.';
+        } else if (message.includes('ubicación')) {
+            return 'Estamos ubicados en San Javier, Medellín, Colombia.';
+        } else if (message.includes('servicio a domicilio')) {
+            return 'Sí, ofrecemos servicio a domicilio para soporte técnico. ¿En qué podemos ayudarte?';
         } else {
             return 'Lo siento, no entendí tu mensaje. Por favor, intenta ser más específico.';
         }
