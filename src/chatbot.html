@@ -1,0 +1,32 @@
+<div id="chatbot" class="chatbot hidden">
+    <div class="chatbot-header">
+        <h3>Chatbot</h3>
+        <button id="minimize-chatbot">-</button>
+        <button id="close-chatbot">X</button>
+    </div>
+    <div class="chatbot-body">
+        <p>Hola, ¿en qué puedo ayudarte?</p>
+    </div>
+    <div class="chatbot-footer">
+        <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+        <button id="chat-send">Enviar</button>
+    </div>
+</div>
+
+<button id="schedule-button" class="schedule-button">Agendar Cita</button>
+
+
+fetch('chatbot.html')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(html => {
+        document.body.insertAdjacentHTML('beforeend', html);
+        initializeChatbot();
+    })
+    .catch(error => console.error('Error al cargar el chatbot:', error));
+
+

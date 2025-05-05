@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    fetch('chatbot.html') // Ruta al archivo HTML del chatbot
+        .then(response => response.text())
+        .then(html => {
+            document.body.insertAdjacentHTML('beforeend', html); // Insertar el chatbot al final del body
+            initializeChatbot(); // Inicializar el chatbot después de cargarlo
+        })
+        .catch(error => console.error('Error al cargar el chatbot:', error));
+});
+
+function initializeChatbot() {
     const chatbot = document.getElementById('chatbot');
     const minimizeChatbotButton = document.getElementById('minimize-chatbot');
     const closeChatbotButton = document.getElementById('close-chatbot');
@@ -13,9 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Uno o más elementos necesarios no se encontraron en el DOM.');
         return;
     }
-
-    // Web Speech API: Synthesis
-    const synth = window.speechSynthesis;
 
     // Función para minimizar el chatbot
     minimizeChatbotButton.addEventListener('click', () => {
@@ -34,6 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
     closeChatbotButton.addEventListener('click', () => {
         chatbot.classList.add('hidden'); // Ocultar el chatbot
     });
+
+    // Evento para mostrar el formulario de agendamiento
+    if (scheduleButton) {
+        scheduleButton.addEventListener('click', () => {
+            showAppointmentForm(); // Llama a la función que muestra el formulario
+        });
+    } else {
+        console.error('El botón de agendamiento no se encontró en el DOM.');
+    }
+
+    // Web Speech API: Synthesis
+    const synth = window.speechSynthesis;
 
     // Función para agregar un mensaje al chatbox
     function addMessage(message, isUser = false) {
@@ -60,97 +79,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Reconocimiento de voz
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = 'es-ES'; // Configurar idioma español
-
-    // Botón para activar el reconocimiento de voz
-    const voiceButton = document.createElement('button');
-    voiceButton.textContent = '🎤 Hablar';
-    voiceButton.style.marginLeft = '10px';
-    voiceButton.style.padding = '10px';
-    voiceButton.style.backgroundColor = '#007bff';
-    voiceButton.style.color = 'white';
-    voiceButton.style.border = 'none';
-    voiceButton.style.borderRadius = '5px';
-    voiceButton.style.cursor = 'pointer';
-    chatbotFooter.appendChild(voiceButton);
-
-    // Evento para iniciar el reconocimiento de voz
-    voiceButton.addEventListener('click', () => {
-        console.log('Reconocimiento de voz iniciado'); // Mensaje de depuración
-        recognition.start();
-    });
-
-    // Capturar el texto reconocido
-    recognition.onresult = (event) => {
-        const voiceMessage = event.results[0][0].transcript;
-        chatInput.value = voiceMessage; // Mostrar el texto en el input
-        const enterEvent = new KeyboardEvent('keypress', { key: 'Enter' });
-        chatInput.dispatchEvent(enterEvent); // Simular el envío del mensaje
-    };
-
-    // Manejar errores del reconocimiento de voz
-    recognition.onerror = (event) => {
-        if (event.error === 'no-speech') {
-            console.error('No se detectó ninguna voz. Por favor, intenta hablar nuevamente.');
-            alert('No se detectó ninguna voz. Por favor, intenta hablar nuevamente.');
-        } else {
-            console.error('Error en el reconocimiento de voz:', event.error);
-        }
-    };
-
-    // Enviar mensajes al chatbot al hacer clic en el botón de enviar
-    chatSend.addEventListener('click', () => {
-        const userMessage = chatInput.value.trim();
-        if (userMessage) {
-            addMessage(userMessage, true); // Agregar mensaje del usuario
-            console.log('Mensaje enviado:', userMessage); // Depuración del mensaje enviado
-            chatInput.value = ''; // Limpiar el input
-
-            // Simular respuesta del bot
-            setTimeout(() => {
-                const botResponse = getBotResponse(userMessage);
-                addMessage(botResponse); // Agregar respuesta del bot
-                console.log('Respuesta del bot:', botResponse); // Depuración de la respuesta del bot
-            }, 1000);
-        }
-    });
-
-    // Enviar mensajes al presionar Enter
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            chatSend.click(); // Simula el clic en el botón de enviar
-        }
-    });
-
     // Función para mostrar el formulario de agendamiento
     function showAppointmentForm() {
         const formHTML = `
             <div id="appointment-form" class="appointment-form">
                 <p>Por favor, ingresa los detalles para agendar tu cita:</p>
-                <label for="appointment-date">Fecha:</label>
-                <input type="date" id="appointment-date" required>
-                <label for="appointment-time">Hora:</label>
-                <input type="time" id="appointment-time" required>
-                <label for="appointment-details">Detalles:</label>
-                <textarea id="appointment-details" placeholder="Describe el trabajo a realizar..." required></textarea>
-                <label for="appointment-contact">Correo o WhatsApp:</label>
-                <input type="text" id="appointment-contact" placeholder="Ingresa tu correo o número de WhatsApp" required>
+                <label for="appointment-date-field">Fecha:</label>
+                <input type="date" id="appointment-date-field" required autocomplete="off">
+                
+                <label for="appointment-time-field">Hora:</label>
+                <input type="time" id="appointment-time-field" required autocomplete="off">
+                
+                <label for="appointment-details-field">Detalles:</label>
+                <textarea id="appointment-details-field" placeholder="Describe el trabajo a realizar..." required autocomplete="off"></textarea>
+                
+                <label for="appointment-contact-field">Correo o WhatsApp:</label>
+                <input type="text" id="appointment-contact-field" placeholder="Ingresa tu correo o número de WhatsApp" required autocomplete="off">
+                
                 <button id="submit-appointment">Agendar</button>
                 <button id="close-appointment">Cerrar</button>
             </div>
         `;
         addMessage(formHTML, false); // Mostrar el formulario en el chatbox como mensaje del bot
-
+    
         setTimeout(() => {
             const submitButton = document.getElementById('submit-appointment');
             const closeButton = document.getElementById('close-appointment');
-
+    
             if (submitButton) {
                 submitButton.addEventListener('click', handleAppointmentSubmission);
             }
-
+    
             if (closeButton) {
                 closeButton.addEventListener('click', () => {
                     const formElement = document.getElementById('appointment-form');
@@ -162,14 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 100);
     }
-
     // Función para manejar el envío del formulario
     function handleAppointmentSubmission() {
-        const date = document.getElementById('appointment-date').value;
-        const time = document.getElementById('appointment-time').value;
-        const details = document.getElementById('appointment-details').value;
-        const contact = document.getElementById('appointment-contact').value;
-
+        const date = document.getElementById('appointment-date-field').value;
+        const time = document.getElementById('appointment-time-field').value;
+        const details = document.getElementById('appointment-details-field').value;
+        const contact = document.getElementById('appointment-contact-field').value;
+    
         if (date && time && details && contact) {
             const confirmationMessage = `
                 ¡Gracias! Tu cita ha sido agendada para el ${date} a las ${time}.
@@ -180,13 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             addMessage('Por favor, completa todos los campos para agendar tu cita.', false);
         }
-    }
-
-    // Evento para mostrar el formulario de agendamiento al hacer clic en el botón
-    if (scheduleButton) {
-        scheduleButton.addEventListener('click', () => {
-            showAppointmentForm(); // Llama a la función que muestra el formulario
-        });
     }
 
     // Función para obtener la respuesta del bot
@@ -218,4 +169,4 @@ document.addEventListener('DOMContentLoaded', () => {
             return 'Lo siento, no entendí tu mensaje. Por favor, intenta ser más específico.';
         }
     }
-});
+}
