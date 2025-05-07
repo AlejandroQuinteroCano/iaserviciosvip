@@ -7,8 +7,33 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error al cargar el chatbot:', error));
 });
+fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
+    .then(response => response.json())
+    .then(data => console.log('Horarios ocupados:', data.horariosOcupados))
+    .catch(error => console.error('Error al verificar disponibilidad:', error));
 
-function initializeChatbot() {
+    fetch('http://localhost:3000/api/citas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            date: '2025-05-10',
+            time: '10:00',
+            user: 'Juan Pérez',
+            description: 'Revisión de hardware'
+        })
+    })
+        .then(response => response.json())
+        .then(data => console.log('Cita creada:', data))
+        .catch(error => console.error('Error al crear la cita:', error));
+    
+    
+    
+    
+    
+    
+        function initializeChatbot() {
     const chatbot = document.getElementById('chatbot');
     const minimizeChatbotButton = document.getElementById('minimize-chatbot');
     const closeChatbotButton = document.getElementById('close-chatbot');

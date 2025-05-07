@@ -1,0 +1,28 @@
+base datos momgos atlas
+ususario:
+
+diegoalejandrocano
+
+contraseña:
+
+Hz1eqFAUfu05lv0I
+
+caracteristics  de mongodb no SQL
+Documnetos: cada registro es un documentos
+{
+"id":1,
+"Nombre"= "Juan",
+"Edad" = 24,
+"Ciudad" = "Madrid"
+}
+
+Colección: un grupo de documentos
+Escabilida horizontal crea la posibilidad  de distribución de estar en varios servidores
+
+mongodb compass se intala local mente 
+
+conexión 
+
+mongodb://localhost:27017 
+
+#curso mongo de cero en youtube https://youtu.be/rcZlFmioTkE?si=yRLyaxErgUQFDsRK 
