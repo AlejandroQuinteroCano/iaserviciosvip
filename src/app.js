@@ -42,8 +42,7 @@ function initializeChatbot() {
         chatbot.classList.add('hidden'); // Ocultar el chatbot
     });
 // activa boton de agendar cita
-    /*
-    // Evento para mostrar el formulario de agendamiento
+//   // Evento para mostrar el formulario de agendamiento
     if (scheduleButton) {
         scheduleButton.addEventListener('click', () => {
             showAppointmentForm(); // Llama a la función que muestra el formulario
@@ -51,8 +50,6 @@ function initializeChatbot() {
     } else {
         console.error('El botón de agendamiento no se encontró en el DOM.');
     }
-
-    */
    // codigo de activar boton de agnda cita
 
     // Web Speech API: Synthesis
@@ -85,9 +82,6 @@ function initializeChatbot() {
 
 
     ///este codigo actuiva boton de agenda cita 
-
-
-    /*
     // Función para mostrar el formulario de agendamiento
     function showAppointmentForm() {
         const formHTML = `
@@ -130,7 +124,6 @@ function initializeChatbot() {
             }
         }, 100);
          }
-        */
         // hasta aqui s eatciva par agendar cita 
    
     // Función para manejar el envío del formulario
