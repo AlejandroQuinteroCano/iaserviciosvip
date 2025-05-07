@@ -1,3 +1,4 @@
+
 <div id="chatbot" class="chatbot hidden">
     <div class="chatbot-header">
         <h3>Chatbot</h3>
@@ -14,17 +15,4 @@
 </div>
 
 <button id="schedule-button" class="schedule-button">Agendar Cita</button>
-fetch('chatbot.html')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(html => {
-        document.body.insertAdjacentHTML('beforeend', html);
-        initializeChatbot();
-    })
-    .catch(error => console.error('Error al cargar el chatbot:', error));
-
 
