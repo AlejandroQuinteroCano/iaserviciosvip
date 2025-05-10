@@ -243,11 +243,22 @@ if (scheduleButton) {
         if (message.includes('hola')) {
             return 'Hola! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
         }
-if (message.includes('urgnete')) {
+
+if (message.includes('buenos dias')) {
+            return 'Buenos dias! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
+}
+if (message.includes('buenas tardes')) {
+            return 'Buenas tardes! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
+}
+if (message.includes('buenas noches')) {
+            return 'Buenas noches! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
+}
+
+if (message.includes('urgente')) {
             return 'Urgente! requiere soporte electrico o computadores . ¿Escribe ami whtasapp 3117773087?';
         }
-        if (message.includes('Como te llamas')) {
-            return 'Hola! en que te puedo ayudar hoy. ¿Soy Aleajdnro Quintero? , Tecnologo en sistemas de informacion y Tecnico en redes electricas domiciliarias';
+        if (message.includes('cual es tu nombre')) {
+            return 'Hola! en que te puedo ayudar hoy. ¿Soy Aleajandro Quintero? , Tecnologo en sistemas de informacion y Tecnico en redes electricas domiciliarias';
         }
         if (message.includes('soporte')) {
             return '¿Necesitas soporte técnico para computadores o redes eléctricas?';
