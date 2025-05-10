@@ -29,7 +29,12 @@ nav a:active {
     margin: auto;
     overflow: hidden;
 }
-
+.producto img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* O la opción que prefieras: cover, fill, etc. */
+}
 footer {
     background: #35424a;
     color: #ffffff;
