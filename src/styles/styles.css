@@ -522,34 +522,66 @@ footer {
 .appointment-form button:hover {
     background-color: #0056b3;
 }
-/* Responsividad */
-@media (max-width: 768px) {
-    header {
-        text-align: center;
-    }
 
-    nav a {
-        display: block;
-        margin: 5px 0;
-    }
+/* Documentacion   
+*/
 
-    .productos-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .chatbot {
-        width: 90%;
-        bottom: 10px;
-        right: 5%;
-    }
+/*  
 
 
-    #chatbot {
-        width: 90%;
-        bottom: 10px;
-        right: 5%;
-    }
+
+
+
+*/
+
+/* Estilos para el botón de entrada de voz */
+#voice-input-button {
+    background: none; /* Fondo transparente para que no se vea como un botón estándar */
+    color: #555; /* Color del icono */
+    border: none;
+    padding: 8px; /* Espaciado alrededor del icono */
+    cursor: pointer;
+    font-size: 1.2em; /* Tamaño del icono */
+    outline: none; /* Evitar el contorno al enfocar */
+    margin-left: 5px; /* Espacio a la izquierda del botón */
 }
+
+#voice-input-button:hover {
+    color: #007bff; /* Cambiar color al pasar el ratón */
+}
+
+/* Asegurar la alineación en el chatbot-footer */
+.chatbot-footer {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f9f9f9;
+    align-items: center; /* Centrar verticalmente los elementos */
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    margin-right: 10px;
+}
+
+#chat-send {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-right: 5px; /* Añade un poco de espacio entre "Enviar" y el micrófono */
+}
+
+#chat-send:hover {
+    background-color: #0056b3;
+}
+
 .schedule-button {
     position: fixed;
     bottom: 20px;
