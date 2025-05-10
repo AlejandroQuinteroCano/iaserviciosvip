@@ -528,6 +528,10 @@ footer {
     background-color: #0056b3;
 }
 
+
+.schedule-button {
+    display: none !important; /* Oculta el botón completamente */
+}
 /* Documentacion   
 */
 

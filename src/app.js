@@ -226,16 +226,40 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
         }
     }
     
+console.log('Botón Agendar Cita:', scheduleButton); // Verifica si se encuentra el botón
+
+if (scheduleButton) {
+    scheduleButton.addEventListener('click', () => {
+        console.log('Botón Agendar Cita clickeado'); // Verifica si se activa el clic
+        showAppointmentForm(); // Llama a la función que muestra el formulario
+    });
+} else {
+    console.error('El botón de agendamiento no se encontró en el DOM.');
+}
 
     // Función para obtener la respuesta del bot
     function getBotResponse(message) {
         message = message.toLowerCase();
-
+        if (message.includes('hola')) {
+            return 'Hola! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
+        }
+if (message.includes('urgnete')) {
+            return 'Urgente! requiere soporte electrico o computadores . ¿Escribe ami whtasapp 3117773087?';
+        }
+        if (message.includes('Como te llamas')) {
+            return 'Hola! en que te puedo ayudar hoy. ¿Soy Aleajdnro Quintero? , Tecnologo en sistemas de informacion y Tecnico en redes electricas domiciliarias';
+        }
         if (message.includes('soporte')) {
             return '¿Necesitas soporte técnico para computadores o redes eléctricas?';
-        } else if (message.includes('computadores')) {
+        } 
+        else if (message.includes('computadores')) {
             return 'Ofrecemos servicios como mantenimiento de hardware, instalación de software y reparación de equipos. ¿Qué necesitas específicamente?';
-        } else if (message.includes('redes eléctricas')) {
+        }
+        else if (message.includes('quien eres')) {
+            return 'Bienvenido a  IASERVICIOSVIP Ofrecemos servicios como mantenimiento de hardware, instalación de software y reparación de equipos. ¿Qué necesitas específicamente?';
+        }
+        
+        else if (message.includes('redes eléctricas')) {
             return 'Podemos ayudarte con instalaciones, reparaciones y mantenimiento de redes eléctricas domiciliarias. ¿En qué podemos asistirte?';
         } else if (message.includes('mantenimiento')) {
             return 'Realizamos mantenimiento preventivo y correctivo. ¿Es para hardware, software o redes eléctricas?';
