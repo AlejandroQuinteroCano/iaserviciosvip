@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lectura y Resumen de Texto</title>
+  <link rel="stylesheet" href="stylesvoz.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Lectura y Resumen de Texto</h1>
+    <textarea id="texto" placeholder="Escribe el texto aquí..."></textarea>
+    <div class="buttons">
+      <button onclick="leerTexto()">Reproducir</button>
+      <button onclick="pausarTexto()">Pausar</button>
+      <button onclick="reanudarTexto()">Reanudar</button>
+      <button onclick="nuevoTexto()">Nuevo</button>
+      <button onclick="resumirTexto()">Resumen</button>
+    </div>
+    <div id="resumen-container">
+      <h2>Resumen:</h2>
+      <p id="resumen"></p>
+
+      <button onclick="leerResumen()">Leer Resumen</button>
+    </div>
+  </div>
+  <script src="summary.js"></script>
+  <script src="appvoz.js"></script>
+</body>
+</html>

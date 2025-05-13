@@ -1,0 +1,37 @@
+¡Por supuesto! Podemos actualizar la página para que genere resúmenes directamente en el navegador, sin depender de APIs externas como Hugging Face. Para ello, utilizaremos bibliotecas de JavaScript que implementan algoritmos de resumen extractivo, como TextRank o TF-IDF.
+
+🧩 Bibliotecas de JavaScript para Resumen de Texto en el Navegador
+summaryjs: Implementa el algoritmo TextRank para resumir textos en el cliente. Es una adaptación de un script en Python a JavaScript. 
+GitHub
+
+sum: Utiliza un enfoque estadístico basado en TF-IDF para generar resúmenes. Es ligero y auto-contenido, ideal para aplicaciones del lado del cliente. 
+GitHub
+
+🚀 Implementación con summaryjs
+
+📄 summary.js
+Puedes obtener el archivo summary.js desde el repositorio oficial de summaryjs en GitHub:
+GitHub
+
+summaryjs en GitHub
+GitHub
+
+Descarga el archivo y colócalo en la misma carpeta que los demás archivos de tu proyecto.
+
+✅ Consideraciones
+Idioma: Estas bibliotecas están optimizadas para textos en inglés. Para textos en español, los resultados pueden variar.
+
+Calidad del resumen: Los algoritmos extractivos seleccionan frases clave del texto original. No generan nuevas frases ni parafrasean.
+
+Tamaño del texto: Funcionan mejor con textos bien estructurados y de longitud moderada.
+
+🧪 ¿Cómo probarlo?
+Copia cada bloque de código en archivos separados con los nombres indicados.
+
+Guarda los archivos index.html, styles.css, script.js y summary.js en la misma carpeta.
+
+Abre el archivo index.html en tu navegador web.
+
+Este ejemplo te permitirá ingresar cualquier texto en español, escucharlo en voz alta con controles de reproducción, pausa y reanudación, y generar un resumen del mismo directamente en el navegador, sin depender de servicios externos.
+
+Si deseas explorar otras bibliotecas o enfoques para mejorar la calidad del resumen en español, no dudes en preguntar.
