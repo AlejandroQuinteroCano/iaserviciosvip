@@ -40,3 +40,95 @@ button {
 #resumen-container {
   text-align: left;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+    header {
+        text-align: center;
+        padding: 10px;
+    }
+nav a {
+    display: block;
+    margin-bottom: 10px;
+  }
+    
+
+    nav a:hover {
+        background-color: #0056b3;
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .chatbot {
+        width: 95%;
+        bottom: 15px;
+        right: 2.5%;
+        border-radius: 10px;
+    }
+
+    #chatbot {
+        width: 95%;
+        bottom: 15px;
+        right: 2.5%;
+        border-radius: 10px;
+    }
+
+    .chatbot-header {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .chatbot-body {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #chat-input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #chat-send {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+
+  .secciones-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-form, .contact-info {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input, textarea, button {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+}

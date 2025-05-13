@@ -669,17 +669,11 @@ footer {
         text-align: center;
         padding: 10px;
     }
-
-    nav a {
-        display: block;
-        margin: 10px 0;
-        text-align: center;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-    }
+nav a {
+    display: block;
+    margin-bottom: 10px;
+  }
+    
 
     nav a:hover {
         background-color: #0056b3;
@@ -723,4 +717,40 @@ footer {
         font-size: 14px;
         padding: 8px 10px;
     }
+
+
+  .secciones-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-form, .contact-info {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input, textarea, button {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 }
