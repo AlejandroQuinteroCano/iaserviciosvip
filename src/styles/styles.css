@@ -457,9 +457,6 @@ footer {
 #minimize-chatbot:hover {
     color: #ffcc00;
 }
-.hidden {
-    display: none;
-}
 
 /* Responsividad */
 @media (max-width: 768px) {

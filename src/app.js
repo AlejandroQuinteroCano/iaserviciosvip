@@ -7,28 +7,40 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error al cargar el chatbot:', error));
 });
+
+// --- INICIO DE SECCIÓN MODIFICADA PARA LOCALHOST (ESCENARIO 2) ---
+
+/* --- BLOQUE COMENTADO ---
+   Las siguientes llamadas fetch no funcionarán en producción si el backend no está desplegado.
+   Se comentan para evitar errores en el sitio en vivo.
+   La funcionalidad de verificar disponibilidad y agendar citas con el backend
+   estará desactivada hasta que configures una API pública.
+
 fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
     .then(response => response.json())
     .then(data => console.log('Horarios ocupados:', data.horariosOcupados))
     .catch(error => console.error('Error al verificar disponibilidad:', error));
 
-    fetch('http://localhost:3000/api/citas', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            date: '2025-05-10',
-            time: '10:00',
-            user: 'Juan Pérez',
-            description: 'Revisión de hardware'
-        })
+fetch('http://localhost:3000/api/citas', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        date: '2025-05-10',
+        time: '10:00',
+        user: 'Juan Pérez',
+        description: 'Revisión de hardware'
     })
-        .then(response => response.json())
-        .then(data => console.log('Cita creada:', data))
-        .catch(error => console.error('Error al crear la cita:', error));
+})
+    .then(response => response.json())
+    .then(data => console.log('Cita creada:', data))
+    .catch(error => console.error('Error al crear la cita:', error));
+*/
+
+// --- FIN DE SECCIÓN MODIFICADA PARA LOCALHOST ---
     
-    function initializeChatbot() {
+function initializeChatbot() {
     const chatbot = document.getElementById('chatbot');
     const minimizeChatbotButton = document.getElementById('minimize-chatbot');
     const closeChatbotButton = document.getElementById('close-chatbot');
@@ -39,12 +51,20 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
     const scheduleButton = document.getElementById('schedule-button');
     const voiceInputButton = document.getElementById('voice-input-button');
 
-    
+    // --- INICIO: Para asegurar que el chatbot sea visible al cargar ---
+    // Si el chatbot tiene la clase 'hidden' por defecto en el HTML, esta línea la quitará.
+    // Asegúrate que el div con id="chatbot" (en chatbot.html o index.html) no tenga 'hidden'
+    // o usa la siguiente línea si quieres controlarlo desde JS:
+    if (chatbot) {
+         chatbot.classList.remove('hidden'); // Descomenta esta línea si necesitas que JS lo haga visible
+    }
+    // --- FIN: Para asegurar que el chatbot sea visible al cargar ---
+
     if ('webkitSpeechRecognition' in window) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recognition = new SpeechRecognition();
-            recognition.lang = 'es-CO';
+            recognition.lang = 'es-CO'; // Consistente con tu audiencia
             recognition.interimResults = true;
             let finalTranscript = '';
 
@@ -69,106 +89,118 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
             recognition.onend = () => {
                 // Opcional: Lógica al finalizar la grabación
             };
+            
+            // Asegúrate que voiceInputButton exista antes de añadir el listener
+            if (voiceInputButton) {
+                voiceInputButton.addEventListener('click', () => {
+                    finalTranscript = '';
+                    recognition.start();
+                    addMessage('Escuchando...', false); // Mensaje al usuario
+                });
+            } else {
+                console.warn("Chatbot: Botón de entrada de voz no encontrado.");
+            }
 
-            voiceInputButton.addEventListener('click', () => {
-                finalTranscript = '';
-                recognition.start();
-                addMessage('Escuchando...', false);
-            });
         } else {
-            voiceInputButton.style.display = 'none';
+            if(voiceInputButton) voiceInputButton.style.display = 'none';
             console.log('El reconocimiento de voz no es compatible con este navegador.');
         }
+    } else {
+        if(voiceInputButton) voiceInputButton.style.display = 'none';
+        console.log('La API de Reconocimiento de Voz no está disponible en este navegador.');
     }
 
-    // Verificar si los elementos existen en el DOM
-    if (!chatbot || !minimizeChatbotButton || !closeChatbotButton || !chatInput || !chatSend || !chatbotBody || !chatbotFooter || !voiceInputButton) {
-        console.error('Uno o más elementos necesarios no se encontraron en el DOM.');
-        return;
+    if (!chatbot || !minimizeChatbotButton || !closeChatbotButton || !chatInput || !chatSend || !chatbotBody || !chatbotFooter /* !voiceInputButton ya se maneja arriba */) {
+        console.error('Chatbot: Uno o más elementos visuales necesarios no se encontraron en el DOM.');
+        // No retornes aquí necesariamente si voiceInputButton es opcional y ya lo manejaste
+        // return; 
+    }
+    
+    // Solo añade listeners si los botones existen
+    if (chatSend && chatInput) {
+        chatSend.addEventListener('click', () => {
+            // console.log('Botón Enviar clickeado'); // Quitar para producción
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                const botResponse = getBotResponse(message);
+                setTimeout(() => addMessage(botResponse, false), 500);
+            }
+        });
+
+        chatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                // console.log('Tecla Enter presionada'); // Quitar para producción
+                chatSend.click();
+            }
+        });
     }
 
-    // Event listeners para enviar mensajes
-    chatSend.addEventListener('click', () => {
-        console.log('Botón Enviar clickeado');
-        const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, true);
-            chatInput.value = '';
-            const botResponse = getBotResponse(message);
-            setTimeout(() => addMessage(botResponse, false), 500);
-        }
-    });
+    if (minimizeChatbotButton && chatbotBody && chatbotFooter) {
+        minimizeChatbotButton.addEventListener('click', () => {
+            if (chatbotBody.style.display === 'none') {
+                chatbotBody.style.display = 'block';
+                chatbotFooter.style.display = 'flex'; // O el display original que tuviera
+                minimizeChatbotButton.textContent = '-';
+            } else {
+                chatbotBody.style.display = 'none';
+                chatbotFooter.style.display = 'none';
+                minimizeChatbotButton.textContent = '+';
+            }
+        });
+    }
 
-    chatInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            console.log('Tecla Enter presionada');
-            chatSend.click();
-        }
-    });
+    if (closeChatbotButton && chatbot) {
+        closeChatbotButton.addEventListener('click', () => {
+            chatbot.classList.add('hidden');
+        });
+    }
 
-    // Función para minimizar el chatbot
-    minimizeChatbotButton.addEventListener('click', () => {
-        if (chatbotBody.style.display === 'none') {
-            chatbotBody.style.display = 'block';
-            chatbotFooter.style.display = 'flex';
-            minimizeChatbotButton.textContent = '-'; // Cambiar el texto del botón
-        } else {
-            chatbotBody.style.display = 'none';
-            chatbotFooter.style.display = 'none';
-            minimizeChatbotButton.textContent = '+'; // Cambiar el texto del botón
-        }
-    });
-
-    // Función para cerrar el chatbot
-    closeChatbotButton.addEventListener('click', () => {
-        chatbot.classList.add('hidden'); // Ocultar el chatbot
-    });
-    // activa boton de agendar cita
-    //  // Evento para mostrar el formulario de agendamiento
+    // Evento para mostrar el formulario de agendamiento (asegúrate de que solo haya un listener)
+    // Ya habías eliminado el duplicado, ¡bien hecho!
     if (scheduleButton) {
         scheduleButton.addEventListener('click', () => {
-            showAppointmentForm(); // Llama a la función que muestra el formulario
+            // console.log('Botón Agendar Cita clickeado'); // Quitar para producción
+            showAppointmentForm();
         });
     } else {
         console.error('El botón de agendamiento no se encontró en el DOM.');
     }
-    // codigo de activar boton de agnda cita
 
-    // Web Speech API: Synthesis
     const synth = window.speechSynthesis;
 
-    // Función para agregar un mensaje al chatbox
     function addMessage(message, isUser = false) {
+        if (!chatbotBody) { // Nueva verificación
+            console.error("Chatbot body no encontrado, no se puede agregar mensaje.");
+            return;
+        }
         const messageElement = document.createElement('div');
+        messageElement.classList.add(isUser ? 'user-message' : 'bot-message'); // Para estilizar diferente
 
-        // Si es un mensaje del bot, permite HTML
         if (!isUser) {
-            messageElement.innerHTML = message; // Permitir HTML en los mensajes del bot
+            messageElement.innerHTML = message;
         } else {
-            messageElement.textContent = message; // Mostrar texto plano para mensajes del usuario
+            messageElement.textContent = message;
         }
 
-        messageElement.style.textAlign = isUser ? 'right' : 'left';
+        // messageElement.style.textAlign = isUser ? 'right' : 'left'; // Puedes manejar esto con CSS
         chatbotBody.appendChild(messageElement);
         chatbotBody.scrollTop = chatbotBody.scrollHeight;
 
-        // Si es un mensaje del bot, hablarlo (excepto si es el formulario)
-        if (!isUser && !message.includes('appointment-form')) {
-            const utterance = new SpeechSynthesisUtterance(message);
-            utterance.lang = 'es-ES'; // Idioma español
-            utterance.pitch = 1; // Tono de voz (1 es normal)
-            utterance.rate = 1; // Velocidad de habla (1 es normal)
+        if (!isUser && !message.includes('appointment-form') && synth && typeof SpeechSynthesisUtterance !== 'undefined') {
+            const utterance = new SpeechSynthesisUtterance(message.replace(/<[^>]*>/g, "")); // Quitar HTML para hablar
+            utterance.lang = 'es-CO'; // Preferiblemente el mismo que reconocimiento
+            utterance.pitch = 1;
+            utterance.rate = 1;
             synth.speak(utterance);
         }
     }
 
-
-    ///este codigo actuiva boton de agenda cita
-    // Función para mostrar el formulario de agendamiento
     function showAppointmentForm() {
         const formHTML = `
             <div id="appointment-form" class="appointment-form">
-                <p>Por favor, ingresa los detalles para agendar tu cita:</p>
+                <p>Por favor, ingresa los detalles para solicitar tu cita:</p>
                 <label for="appointment-date-field">Fecha:</label>
                 <input type="date" id="appointment-date-field" required autocomplete="off">
 
@@ -181,11 +213,11 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
                 <label for="appointment-contact-field">Correo o WhatsApp:</label>
                 <input type="text" id="appointment-contact-field" placeholder="Ingresa tu correo o número de WhatsApp" required autocomplete="off">
 
-                <button id="submit-appointment">Agendar</button>
+                <button id="submit-appointment">Enviar Solicitud</button>
                 <button id="close-appointment">Cerrar</button>
             </div>
         `;
-        addMessage(formHTML, false); // Mostrar el formulario en el chatbox como mensaje del bot
+        addMessage(formHTML, false);
 
         setTimeout(() => {
             const submitButton = document.getElementById('submit-appointment');
@@ -199,43 +231,96 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
                 closeButton.addEventListener('click', () => {
                     const formElement = document.getElementById('appointment-form');
                     if (formElement) {
-                        formElement.remove(); // Eliminar el formulario del DOM
-                        addMessage('El formulario de agendamiento ha sido cerrado.', false);
+                        formElement.remove();
+                        addMessage('Has cerrado el formulario de solicitud de cita.', false);
                     }
                 });
             }
         }, 100);
     }
-    // hasta aqui s eatciva par agendar cita
 
-    // Función para manejar el envío del formulario
     function handleAppointmentSubmission() {
-        const date = document.getElementById('appointment-date-field').value;
-        const time = document.getElementById('appointment-time-field').value;
-        const details = document.getElementById('appointment-details-field').value;
-        const contact = document.getElementById('appointment-contact-field').value;
+        const dateElement = document.getElementById('appointment-date-field');
+        const timeElement = document.getElementById('appointment-time-field');
+        const detailsElement = document.getElementById('appointment-details-field');
+        const contactElement = document.getElementById('appointment-contact-field');
+
+        // Verificar que los elementos existen antes de acceder a .value
+        if (!dateElement || !timeElement || !detailsElement || !contactElement) {
+            addMessage('Error interno: No se pudieron encontrar los campos del formulario.', false);
+            return;
+        }
+
+        const date = dateElement.value;
+        const time = timeElement.value;
+        const details = detailsElement.value;
+        const contact = contactElement.value;
 
         if (date && time && details && contact) {
+            // --- MENSAJE DE CONFIRMACIÓN SUGERIDO ---
             const confirmationMessage = `
-                ¡Gracias! Tu cita ha sido agendada para el ${date} a las ${time}.
-                Detalles: ${details}.
-                Contacto: ${contact}.
+                ¡Gracias! Hemos recibido tu solicitud de cita para el <strong>${date}</strong> a las <strong>${time}</strong>.
+                <br>Detalles: ${details}.
+                <br>Contacto: ${contact}.
+                <br>Nos pondremos en contacto contigo pronto para confirmar la disponibilidad y los detalles finales.
             `;
-            addMessage(confirmationMessage, false); // Confirmar la cita al usuario
+            addMessage(confirmationMessage, false);
+            
+            // Opcional: Limpiar el formulario o removerlo después de enviar
+            const formElement = document.getElementById('appointment-form');
+            if (formElement) {
+                formElement.remove();
+            }
+
         } else {
-            addMessage('Por favor, completa todos los campos para agendar tu cita.', false);
+            addMessage('Por favor, completa todos los campos para solicitar tu cita.', false);
         }
     }
     
-console.log('Botón Agendar Cita:', scheduleButton); // Verifica si se encuentra el botón
+    // console.log('Botón Agendar Cita:', scheduleButton); // Quitar para producción
 
     // Función para obtener la respuesta del bot
     function getBotResponse(message) {
         message = message.toLowerCase();
-        if (message.includes('hola')) {
-            return 'Hola! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
-        }
+        // ... (todo tu bloque de if-else if para getBotResponse se mantiene igual) ...
+        // (Asegúrate que las respuestas aquí no dependan de datos que vendrían del backend)
 
+        if (message.includes('hola')) {
+            return '¡Hola! Bienvenido a IA Servicios VIP. ¿En qué te puedo ayudar hoy?';
+        } else if (message.includes('buenos dias')) {
+            return '¡Buenos días! Bienvenido a IA Servicios VIP. ¿En qué te puedo ayudar?';
+        } else if (message.includes('buenas tardes')) {
+            return '¡Buenas tardes! Bienvenido a IA Servicios VIP. ¿En qué te puedo ayudar?';
+        } else if (message.includes('buenas noches')) {
+            return '¡Buenas noches! Bienvenido a IA Servicios VIP. ¿En qué te puedo ayudar?';
+        } else if (message.includes('urgente')) {
+            return 'Entendido. Si es una urgencia, por favor escribe directamente a nuestro WhatsApp: 3117773087 para una atención más rápida.';
+        } else if (message.includes('cual es tu nombre')) {
+            return 'Soy el asistente virtual de IA Servicios VIP. Estoy aquí para ayudarte con tus consultas sobre nuestros servicios.';
+        } else if (message.includes('soporte')) {
+            return 'Ofrecemos soporte técnico para computadores y para redes eléctricas domiciliarias. ¿Sobre cuál necesitas información?';
+        } else if (message.includes('computadores')) {
+            return 'Para computadores, realizamos mantenimiento de hardware, instalación y configuración de software, reparación de equipos, y más. ¿Tienes alguna necesidad específica?';
+        } else if (message.includes('quien eres')) {
+            return 'Soy el asistente virtual de IA Servicios VIP. ¿Cómo puedo ayudarte con nuestros servicios de soporte técnico?';
+        } else if (message.includes('redes eléctricas')) {
+            return 'En redes eléctricas domiciliarias, te ayudamos con instalaciones, reparaciones, mantenimiento y asesoría bajo la normativa RETIE. ¿Qué tipo de servicio eléctrico buscas?';
+        } else if (message.includes('mantenimiento')) {
+            return 'Claro, ofrecemos mantenimiento preventivo y correctivo. ¿Sería para tus equipos de cómputo o para instalaciones eléctricas?';
+        } else if (message.includes('contacto')) {
+            return 'Puedes contactarnos al correo iaserviciosvip@hotmail.com o directamente a nuestro WhatsApp 3117773087. También puedes solicitar una cita a través de este chat.';
+        } else if (message.includes('precio') || message.includes('costo') || message.includes('tarifa')) {
+            return 'Nuestros precios varían según la complejidad y tipo de servicio. Para darte una cotización más precisa, cuéntame un poco más sobre lo que necesitas o agenda una visita de diagnóstico.';
+        } else if (message.includes('horario')) {
+            return 'Nuestro horario de atención principal es de lunes a viernes de 8:00 AM a 6:00 PM, y sábados de 9:00 AM a 1:00 PM. Atendemos urgencias con previa coordinación.';
+        } else if (message.includes('ubicación') || message.includes('donde estan')) {
+            return 'Estamos ubicados en el sector de San Javier, Medellín, Colombia. Ofrecemos servicios a domicilio en el área metropolitana.';
+        } else if (message.includes('servicio a domicilio')) {
+            return 'Sí, gran parte de nuestros servicios de soporte técnico, tanto para computadores como para temas eléctricos, los ofrecemos a domicilio para tu comodidad.';
+        } else if (message.includes('agendar') || message.includes('cita')) {
+            showAppointmentForm();
+            return '¡Perfecto! Te mostraré un formulario para que solicites tu cita.';
+        }
 else if (message.includes('buenos dias')) {
             return 'Buenos dias! en que te puedo ayudar hoy. ¿Bienvenido IASERVCIOSVIP?';
 }
@@ -302,6 +387,9 @@ else if (message.includes('urgente')) {
         return 'Se definen varios niveles de tensión: • Alta tensión (AT): Tensiones nominales superiores a 57,5 kV14. • Media tensión (MT): Tensiones nominales superiores a 1000 V e inferiores a 57,5 kV14. • Baja tensión (BT): Tensiones nominales mayores o iguales a 25 V y menores o iguales a 1000 V14. • Muy baja tensión: Tensiones menores de 25 V14. La clasificación de una instalación eléctrica se basa en el valor de la tensión nominal más elevada si hay distintos niveles14.';
     }
     else if (message.includes('qué es el retie') && message.includes('objeto de esta modificación')) {
+        return 'El RETIE es el Reglamento Técnico de Instalaciones Eléctricas1.... El objeto de la Resolución 40117 de 2024 es modificar integralmente este Reglamento Técnico1....';
+    }
+    else if (message.includes('retie') && message.includes('objeto de esta modificación')) {
         return 'El RETIE es el Reglamento Técnico de Instalaciones Eléctricas1.... El objeto de la Resolución 40117 de 2024 es modificar integralmente este Reglamento Técnico1....';
     }
     else if (message.includes('a qué aplica el retie') || message.includes('aplicabilidad retie') || message.includes('campo de aplicacion retie')) {
