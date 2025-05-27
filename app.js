@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/chatbot.html') // Ruta al archivo HTML del chatbot
+    fetch('chatbot.html') // Ruta al archivo HTML del chatbot
         .then(response => response.text())
         .then(html => {
             document.body.insertAdjacentHTML('beforeend', html); // Insertar el chatbot al final del body
