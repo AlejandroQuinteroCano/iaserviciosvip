@@ -387,10 +387,10 @@ else if (message.includes('urgente')) {
         return 'Se definen varios niveles de tensión: • Alta tensión (AT): Tensiones nominales superiores a 57,5 kV14. • Media tensión (MT): Tensiones nominales superiores a 1000 V e inferiores a 57,5 kV14. • Baja tensión (BT): Tensiones nominales mayores o iguales a 25 V y menores o iguales a 1000 V14. • Muy baja tensión: Tensiones menores de 25 V14. La clasificación de una instalación eléctrica se basa en el valor de la tensión nominal más elevada si hay distintos niveles14.';
     }
     else if (message.includes('qué es el retie') && message.includes('objeto de esta modificación')) {
-        return 'El RETIE es el Reglamento Técnico de Instalaciones Eléctricas1.... El objeto de la Resolución 40117 de 2024 es modificar integralmente este Reglamento Técnico1....';
+        return 'El RETIE es el Reglamento Técnico de Instalaciones Eléctricas El objeto de la Resolución 40117 de 2024 es modificar integralmente este Reglamento Técnico';
     }
-    else if (message.includes('retie') && message.includes('objeto de esta modificación')) {
-        return 'El RETIE es el Reglamento Técnico de Instalaciones Eléctricas1.... El objeto de la Resolución 40117 de 2024 es modificar integralmente este Reglamento Técnico1....';
+    else if (message.includes('retie')) {
+        return 'El RETIE es el Reglamento Técnico de Instalaciones Eléctricas El objeto de la Resolución 40117 de 2024 es modificar integralmente este Reglamento Técnico';
     }
     else if (message.includes('a qué aplica el retie') || message.includes('aplicabilidad retie') || message.includes('campo de aplicacion retie')) {
         return 'El Reglamento será aplicable a las instalaciones eléctricas, los productos utilizados en dichas instalaciones, y a las personas naturales y/o jurídicas que las intervengan4.';
