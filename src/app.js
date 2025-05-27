@@ -39,6 +39,7 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
     const scheduleButton = document.getElementById('schedule-button');
     const voiceInputButton = document.getElementById('voice-input-button');
 
+    
     if ('webkitSpeechRecognition' in window) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
@@ -227,15 +228,6 @@ fetch('http://localhost:3000/api/citas/disponibilidad?date=2025-05-10')
     }
     
 console.log('Botón Agendar Cita:', scheduleButton); // Verifica si se encuentra el botón
-
-if (scheduleButton) {
-    scheduleButton.addEventListener('click', () => {
-        console.log('Botón Agendar Cita clickeado'); // Verifica si se activa el clic
-        showAppointmentForm(); // Llama a la función que muestra el formulario
-    });
-} else {
-    console.error('El botón de agendamiento no se encontró en el DOM.');
-}
 
     // Función para obtener la respuesta del bot
     function getBotResponse(message) {
