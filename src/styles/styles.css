@@ -481,41 +481,6 @@ nav a {
         gap: 15px;
     }
 
-    .chatbot {
-        width: 95%;
-        bottom: 15px;
-        right: 2.5%;
-        border-radius: 10px;
-    }
-
-    #chatbot {
-        width: 95%;
-        bottom: 15px;
-        right: 2.5%;
-        border-radius: 10px;
-    }
-
-    .chatbot-header {
-        font-size: 16px;
-        padding: 8px;
-    }
-
-    .chatbot-body {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    #chat-input {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    #chat-send {
-        font-size: 14px;
-        padding: 8px 10px;
-    }
-
-
   .secciones-grid {
     display: flex;
     flex-direction: column;
@@ -549,5 +514,101 @@ input, textarea, button {
   padding: 10px;
   box-sizing: border-box;
 }
+
+    /* Estilos específicos para el Chatbot en móviles */
+    #chatbot { /* Usamos #chatbot ya que tu HTML usa id="chatbot" y tiene más especificidad */
+        width: 95%; /* Ocupa casi todo el ancho */
+        max-width: 400px; /* Un ancho máximo incluso en móviles un poco más grandes pero dentro del breakpoint */
+        bottom: 10px; /* Un poco menos de espacio desde abajo */
+        /* Para centrarlo si usas width y no left/right: */
+        left: 50%;
+        transform: translateX(-50%);
+        /* Si prefieres pegado a un lado con margen: */
+        /* left: 2.5%; */
+        /* right: auto; */ /* Anula el 'right' del estilo base si usas 'left' */
+        
+        border-radius: 10px; /* Lo tenías y está bien */
+        max-height: 75vh; /* Limita la altura al 75% de la altura de la pantalla */
+        min-height: 0; /* Permite que sea más pequeño si está minimizado o vacío */
+        box-sizing: border-box; /* Importante para que padding/border no lo hagan más ancho que 95% */
+    }
+    /* La regla .chatbot dentro de la media query es redundante si #chatbot está presente y es más específica */
+
+    .chatbot-header {
+        font-size: 0.9rem; /* Un poco más pequeño el texto del título */
+        padding: 8px 10px; /* Ajusta el padding */
+    }
+
+    #minimize-chatbot,
+    #close-chatbot {
+        font-size: 1rem; /* Tamaño de los íconos/texto de los botones */
+        padding: 4px 6px; /* Padding más ajustado para los botones */
+    }
+
+    .chatbot-body {
+        font-size: 0.85rem; /* Texto de los mensajes un poco más pequeño */
+        padding: 8px;
+        /* La altura se ajustará por flex:1 y el max-height del #chatbot general */
+    }
+
+    .chatbot-footer {
+        padding: 8px; /* Padding general del footer */
+    }
+
+    #chat-input {
+        font-size: 0.85rem; /* Texto del input */
+        padding: 8px;
+        height: auto; /* Permite que el padding defina la altura */
+    }
+
+    #chat-send {
+        font-size: 0.85rem; /* Texto del botón enviar */
+        padding: 8px 10px; /* Padding del botón enviar */
+    }
+
+    #voice-input-button {
+        font-size: 1.1em; /* Ícono un poco más pequeño */
+        padding: 6px;
+    }
+
+    /* --- Mensajes dentro del chatbot --- */
+    .bot-message, .user-message { /* Asumiendo que añades estas clases desde JS */
+        padding: 6px 8px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        line-height: 1.4;
+        word-wrap: break-word; /* Para que palabras largas no rompan el layout */
+    }
+    .bot-message {
+        background-color: #e9e9eb;
+        text-align: left;
+    }
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        text-align: right;
+    }
+
+    /* --- Estilos para el formulario de agendamiento DENTRO del chatbot --- */
+    .appointment-form {
+        padding: 8px; /* Menos padding en móvil */
+    }
+    .appointment-form label {
+        font-size: 0.8rem;
+        margin-top: 8px;
+    }
+    .appointment-form input,
+    .appointment-form textarea {
+        font-size: 0.85rem;
+        padding: 6px;
+        margin-bottom: 8px;
+    }
+    .appointment-form button {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        margin-top: 5px; /* Espacio antes de los botones del formulario */
+    }
+}
+
 
 }
